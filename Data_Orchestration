@@ -1,0 +1,33 @@
+Data Orchestration:
+These are scenario questions, we are looking for a written response which can include pseudocode if needed. No
+sample data is associated with these questions.
+
+1.  Data is written into Azure Blob Storage on a daily cadence in a csv file. Describe a process how you would
+    create a new table in a Snowflake database off of the Azure Blob Storage source. We want the Snowflake
+    table to be updated on a weekly cadence. Provide a written explanation.
+
+         I have never worked with either of these platforms, but after researching this question online, I've learned a bit about them. It seems that these are the steps of the process:
+         a. Data Storage in Azure Blob Storage - New data is written daily as CSV files into an Azure Blob Storage container.
+         This serves as a raw data storage layer before ingestion into Snowflake.
+         b. Connecting Snowflake to Azure - A Storage Integration is created in Snowflake, which securely connects it to Azure Blob Storage.nAn External Stage is set up in Snowflake to reference the Blob Storage location.
+         c. Loading Data into Snowflake - A structured Snowflake table is created to store the ingested data.
+         The COPY INTO command is used to load new data from the Azure stage into Snowflake.
+         d. Automating Weekly Updates - A Snowflake Task is scheduled to run on a weekly basis.
+         It checks for new files and loads them into the Snowflake table.
+         A Stream can be used to track changes and prevent duplicate entries.
+         e. Final Output - The Snowflake table remains updated with the latest data from Azure Blob Storage.
+         Analysts and applications can query Snowflake for reporting and analysis.
+
+2.  Let's say the above data is in our Snowflake database and the end users are asking for delivery of insights.
+    How could we make aggregated data available for an external user to consume? Give consideration to
+    whether the client wants the data pushed to them versus available for them to pull when needed. Assume
+    the data cannot be passed via an emailed csv.
+
+         As stated above, I've never worked with Snowflake before, so I'm unfamiliar with it. However, after researching and learning about it online, it seems like there a few ways to do this:
+            If the client already uses Snowflake, Secure Data Sharing is the best. We can share aggregated tables directly with them, and then they can query the shared data without duplication or exporting.
+
+             If the client wants automated delivery, and they don't use Snowflake, we can export the aggregated data to a cloud storage (AWS S3, Azure Blob, Google Cloud Storage), where they can pick it up, or if the client has a REST API, we can send aggregated data to their system using a serverless function (AWS Lambda, Azure Functions) that calls Snowflake, extracts data, and pushes it via API.
+
+             If the client wants to pull data when needed, Snowflake Reader Accounts or API-based access is ideal. We can create a Snowflake Reader Account for the client, allowing them to query shared data without a full Snowflake subscription, or another option is to use secure API-based access. We can set up an external function that allows clients to query the data without direct database access.
+
+             If the client prefers visual insights, BI Dashboard integration is the best choice. We provide access to the aggregated_sales table, and they build reports as needed.
