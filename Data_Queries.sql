@@ -1,5 +1,4 @@
--- I was able to do these queries mostly independently, but I did need some assistnace with a few things, such DATE_TRUNC 
--- and setting up the CASE for the age groups.
+-- I was able to do these queries mostly independently, but I did need some assistnace with a few things, such DATE_TRUNC and setting up the CASE for the age groups.
 
 -- 1. Purchased products (purchase count and quantity purchased) per month
 SELECT DATE_TRUNC('month', PurchaseDate) AS purchase_month, 
